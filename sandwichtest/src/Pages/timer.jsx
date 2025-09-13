@@ -1,63 +1,88 @@
 import React, { useState, useEffect } from 'react';
 
-
 const Timer = () => {
-  const initialSeconds = 48 * 60 * 60;
-  const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
+  const initialTime = 48 * 60 * 60; // 48 hours in seconds
+  const [timeLeft, setTimeLeft] = useState(initialTime);
 
   useEffect(() => {
-    if (secondsLeft <= 0) return;
     const timer = setInterval(() => {
-      setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
+    
     return () => clearInterval(timer);
-  }, [secondsLeft]);
+  }, []);
 
-  const formatTime = (secs) => {
-    const hours = Math.floor(secs / 3600);
-    const minutes = Math.floor((secs % 3600) / 60);
-    const seconds = secs % 60;
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  // Calculate days, hours, minutes, seconds
+  const days = Math.floor(timeLeft / (24 * 60 * 60));
+  const hours = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60));
+  const minutes = Math.floor((timeLeft % (60 * 60)) / 60);
+  const seconds = timeLeft % 60;
+
+  const boxStyle = {
+    width: '175px',
+    height: '180px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#25276da2',
+    boxShadow: '0px 0px 30px #25276d45',
+    borderRadius: '10px',
+    fontSize: '75px',
+    margin: '0px 15px',
+    position: 'relative',
+    color: '#ffffff',
+    fontWeight: 'bold',
+  };
+
+  const labelStyle = {
+    position: 'absolute',
+    fontSize: '18px',
+    bottom: '15px',
+  };
+
+  const colonStyle = {
+    fontSize: '95px',
+    color: '#25276d',
+    fontWeight: 'bold',
   };
 
   return (
     <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      background: 'linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)',
-      zIndex: 9999,
+      width: '100%',
+      height: '100vh',
+      fontFamily: "'Roboto', sans-serif",
+      margin: 0,
+      padding: 0,
     }}>
       <div style={{
-        width: '75vw',
-        height: '75vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        perspective: '800px',
       }}>
-        <div style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '10vw',
-          fontWeight: 'bold',
-          color: '#222',
-          background: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-          borderRadius: '5vw',
-          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-          padding: '2vw 4vw',
-          transform: 'rotateY(20deg) rotateX(10deg)',
-          textShadow: '2px 2px 16px #fff, 0 0 40px #fda085',
-        }}>
-          {formatTime(secondsLeft)}
+        <div style={boxStyle}>
+          {days}
+          <div style={labelStyle}>Days</div>
+        </div>
+        <div style={colonStyle}>:</div>
+        
+        <div style={boxStyle}>
+          {hours}
+          <div style={labelStyle}>Hours</div>
+        </div>
+        <div style={colonStyle}>:</div>
+        
+        <div style={boxStyle}>
+          {minutes}
+          <div style={labelStyle}>Minutes</div>
+        </div>
+        <div style={colonStyle}>:</div>
+        
+        <div style={boxStyle}>
+          {seconds}
+          <div style={labelStyle}>Seconds</div>
         </div>
       </div>
     </div>

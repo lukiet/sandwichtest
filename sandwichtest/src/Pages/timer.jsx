@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { image1, image2, image3, image4, mobileImage1, mobileImage2, mobileImage3, mobileImage4} from "../Assets/assets";
 
+// Fixed launch date - September 15, 2025 at 5:00 PM UTC
+// This ensures all visitors worldwide see the same countdown
+const targetDate = new Date('2025-09-15T17:00:00.000Z');
+
+const calculateTimeLeft = () => {
+  const now = new Date();
+  const difference = targetDate.getTime() - now.getTime();
+  return Math.max(0, Math.floor(difference / 1000)); // Convert to seconds
+};
+
 const Timer = () => {
-  const initialTime = 48 * 60 * 60; // 48 hours in seconds
-  const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [image1, image2, image3, image4];
@@ -18,7 +27,7 @@ const Timer = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
     
     return () => clearInterval(timer);

@@ -31,32 +31,37 @@ const Timer = () => {
   const minutes = Math.floor((timeLeft % (60 * 60)) / 60);
   const seconds = timeLeft % 60;
 
+  // Responsive dimensions based on screen size
+  const isMobile = window.innerWidth <= 768;
+  const isSmallMobile = window.innerWidth <= 480;
+  
   const boxStyle = {
-    width: "250px",
-    height: "300px",
+    width: isSmallMobile ? "70px" : isMobile ? "100px" : "250px",
+    height: isSmallMobile ? "80px" : isMobile ? "120px" : "300px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#25276dd3",
     boxShadow: "0px 0px 30px #25276d45",
     borderRadius: "10px",
-    fontSize: "75px",
-    margin: "0px 15px",
+    fontSize: isSmallMobile ? "24px" : isMobile ? "36px" : "75px",
+    margin: isSmallMobile ? "0px 3px" : isMobile ? "0px 8px" : "0px 15px",
     position: "relative",
     color: "#ffffff",
     fontWeight: "bold",
   };
+  
   const boxStyle1 = {
-    width: "250px",
-    height: "300px",
+    width: isSmallMobile ? "70px" : isMobile ? "100px" : "250px",
+    height: isSmallMobile ? "80px" : isMobile ? "120px" : "300px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#25276dff",
     boxShadow: "0px 0px 30px #25276d45",
     borderRadius: "10px",
-    fontSize: "75px",
-    margin: "0px 15px",
+    fontSize: isSmallMobile ? "24px" : isMobile ? "36px" : "75px",
+    margin: isSmallMobile ? "0px 3px" : isMobile ? "0px 8px" : "0px 15px",
     position: "relative",
     color: "#ffffff",
     fontWeight: "bold",
@@ -64,12 +69,12 @@ const Timer = () => {
 
   const labelStyle = {
     position: "absolute",
-    fontSize: "18px",
-    bottom: "15px",
+    fontSize: isSmallMobile ? "8px" : isMobile ? "12px" : "18px",
+    bottom: isSmallMobile ? "8px" : isMobile ? "12px" : "15px",
   };
 
   const colonStyle = {
-    fontSize: "95px",
+    fontSize: isSmallMobile ? "30px" : isMobile ? "50px" : "95px",
     color: "#25276d",
     fontWeight: "bold",
   };
@@ -88,7 +93,8 @@ const Timer = () => {
         backgroundImage: `url(${images[currentImageIndex]})`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
+        backgroundSize: isSmallMobile ? "contain" : isMobile ? "cover" : "cover",
+        backgroundAttachment: isMobile ? "scroll" : "fixed",
         transition: "background-image 0.5s ease-in-out",
         position: "fixed",
         top: 0,
@@ -101,18 +107,19 @@ const Timer = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          gap: "40px",
+          gap: isSmallMobile ? "20px" : isMobile ? "30px" : "40px",
         }}
       >
         <h1
           style={{
-            fontSize: "4rem",
+            fontSize: isSmallMobile ? "1.5rem" : isMobile ? "2.5rem" : "4rem",
             fontWeight: "bold",
             color: "#ffffff",
             textAlign: "center",
             textShadow: "2px 2px 8px rgba(0,0,0,0.7)",
             margin: 0,
             fontFamily: "'Roboto', sans-serif",
+            padding: "0 20px",
           }}
         >
           COMING SOON

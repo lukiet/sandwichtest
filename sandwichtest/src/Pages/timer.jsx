@@ -1,17 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { image1,image2,image3,image4 } from '../Assets/assets';
+import React, { useState, useEffect } from "react";
+import { image1, image2, image3, image4 } from "../Assets/assets";
 
 const Timer = () => {
   const initialTime = 48 * 60 * 60; // 48 hours in seconds
   const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const images = [image1, image2, image3, image4];
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
-    
+
     return () => clearInterval(timer);
   }, []);
+
+  // Alternate background images every 3 seconds
+  useEffect(() => {
+    const imageTimer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+
+    return () => clearInterval(imageTimer);
+  }, [images.length]);
 
   // Calculate days, hours, minutes, seconds
   const days = Math.floor(timeLeft / (24 * 60 * 60));
@@ -20,74 +32,125 @@ const Timer = () => {
   const seconds = timeLeft % 60;
 
   const boxStyle = {
-    width: '175px',
-    height: '180px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#25276da2',
-    boxShadow: '0px 0px 30px #25276d45',
-    borderRadius: '10px',
-    fontSize: '75px',
-    margin: '0px 15px',
-    position: 'relative',
-    color: '#ffffff',
-    fontWeight: 'bold',
+    width: "250px",
+    height: "300px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#25276dd3",
+    boxShadow: "0px 0px 30px #25276d45",
+    borderRadius: "10px",
+    fontSize: "75px",
+    margin: "0px 15px",
+    position: "relative",
+    color: "#ffffff",
+    fontWeight: "bold",
+  };
+  const boxStyle1 = {
+    width: "250px",
+    height: "300px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#25276dff",
+    boxShadow: "0px 0px 30px #25276d45",
+    borderRadius: "10px",
+    fontSize: "75px",
+    margin: "0px 15px",
+    position: "relative",
+    color: "#ffffff",
+    fontWeight: "bold",
   };
 
   const labelStyle = {
-    position: 'absolute',
-    fontSize: '18px',
-    bottom: '15px',
+    position: "absolute",
+    fontSize: "18px",
+    bottom: "15px",
   };
 
   const colonStyle = {
-    fontSize: '95px',
-    color: '#25276d',
-    fontWeight: 'bold',
+    fontSize: "95px",
+    color: "#25276d",
+    fontWeight: "bold",
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      height: '100vh',
-      fontFamily: "'Roboto', sans-serif",
-      margin: 0,
-      padding: 0,
-    }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100vw",
+        height: "100vh",
+        fontFamily: "'Roboto', sans-serif",
+        margin: 0,
+        padding: 0,
+        backgroundImage: `url(${images[currentImageIndex]})`,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        transition: "background-image 0.5s ease-in-out",
+        position: "fixed",
+        top: 0,
+        left: 0,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "40px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "4rem",
+            fontWeight: "bold",
+            color: "#ffffff",
+            textAlign: "center",
+            textShadow: "2px 2px 8px rgba(0,0,0,0.7)",
+            margin: 0,
+            fontFamily: "'Roboto', sans-serif",
+          }}
+        >
+          COMING SOON
+        </h1>
+        
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
         <div style={boxStyle}>
           {days}
           <div style={labelStyle}>Days</div>
         </div>
         <div style={colonStyle}>:</div>
-        
+
         <div style={boxStyle}>
           {hours}
           <div style={labelStyle}>Hours</div>
         </div>
         <div style={colonStyle}>:</div>
-        
-        <div style={boxStyle}>
+
+        <div style={boxStyle1}>
           {minutes}
           <div style={labelStyle}>Minutes</div>
         </div>
         <div style={colonStyle}>:</div>
-        
+
         <div style={boxStyle}>
           {seconds}
           <div style={labelStyle}>Seconds</div>
         </div>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Timer;

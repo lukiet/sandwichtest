@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Timer from './Pages/timer';
 
@@ -7,7 +6,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Timer />
-        <img src={logo} className="App-logo" alt="logo" />
       </header>
     </div>
   );

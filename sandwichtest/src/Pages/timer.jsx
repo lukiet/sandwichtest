@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { image1,image2,image3,image4 } from '../Assets/assets';
 
 const Timer = () => {
   const initialTime = 48 * 60 * 60; // 48 hours in seconds

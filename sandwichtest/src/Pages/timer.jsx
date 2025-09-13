@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { image1, image2, image3, image4 } from "../Assets/assets";
+import { image1, image2, image3, image4, mobileImage1, mobileImage2, mobileImage3, mobileImage4} from "../Assets/assets";
 
 const Timer = () => {
   const initialTime = 48 * 60 * 60; // 48 hours in seconds
@@ -7,23 +7,31 @@ const Timer = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [image1, image2, image3, image4];
+  const mobileImages = [mobileImage1, mobileImage2, mobileImage3, mobileImage4];
+  
+  // Responsive dimensions based on screen size
+  const isMobile = window.innerWidth <= 768;
+  const isSmallMobile = window.innerWidth <= 480;
+  
+  // Choose image array based on screen size
+  const currentImages = isMobile ? mobileImages : images;
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
-
+    
     return () => clearInterval(timer);
   }, []);
 
   // Alternate background images every 3 seconds
   useEffect(() => {
     const imageTimer = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % currentImages.length);
     }, 3000);
 
     return () => clearInterval(imageTimer);
-  }, [images.length]);
+  }, [currentImages.length]);
 
   // Calculate days, hours, minutes, seconds
   const days = Math.floor(timeLeft / (24 * 60 * 60));
@@ -31,10 +39,6 @@ const Timer = () => {
   const minutes = Math.floor((timeLeft % (60 * 60)) / 60);
   const seconds = timeLeft % 60;
 
-  // Responsive dimensions based on screen size
-  const isMobile = window.innerWidth <= 768;
-  const isSmallMobile = window.innerWidth <= 480;
-  
   const boxStyle = {
     width: isSmallMobile ? "70px" : isMobile ? "100px" : "250px",
     height: isSmallMobile ? "80px" : isMobile ? "120px" : "300px",
@@ -90,7 +94,7 @@ const Timer = () => {
         fontFamily: "'Roboto', sans-serif",
         margin: 0,
         padding: 0,
-        backgroundImage: `url(${images[currentImageIndex]})`,
+        backgroundImage: `url(${currentImages[currentImageIndex]})`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: isSmallMobile ? "contain" : isMobile ? "cover" : "cover",

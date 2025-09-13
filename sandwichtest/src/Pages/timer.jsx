@@ -34,16 +34,26 @@ const Timer = () => {
       zIndex: 9999,
     }}>
       <div style={{
+        width: '75vw',
+        height: '75vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         perspective: '800px',
       }}>
         <div style={{
-          fontSize: '6rem',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '10vw',
           fontWeight: 'bold',
           color: '#222',
           background: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-          borderRadius: '30px',
+          borderRadius: '5vw',
           boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-          padding: '60px 120px',
+          padding: '2vw 4vw',
           transform: 'rotateY(20deg) rotateX(10deg)',
           textShadow: '2px 2px 16px #fff, 0 0 40px #fda085',
         }}>
